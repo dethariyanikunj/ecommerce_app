@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../core/const/app_const.dart';
+import '../../../../core/localizations/language_keys.dart';
+import '../../../../core/utils/app_utils.dart';
+import '../../../../core/widgets/app_screen_title_bar.dart';
+import '../controllers/product_controller.dart';
+import '../widgets/product_list_item.dart';
+import '../widgets/search_filter_view.dart';
+
+class ProductListPage extends GetView<ProductController> {
+  const ProductListPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          AppScreenTitleBar(
+            title: LanguageKey.products.tr,
+            isBackButtonVisible: false,
+          ),
+          SearchFilterView(
+            controller: controller,
+          ),
+          Expanded(
+            child: Obx(
+              () => Skeletonizer(
+                enabled: controller.initialLoading.isTrue,
+                child: AnimationLimiter(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    controller: controller.scrollController,
+                    itemCount: controller.initialLoading.isTrue
+                        ? AppSkeletonConst.defaultVerticalItem
+                        : controller.products.length +
+                            (controller.hasMore.value ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (controller.initialLoading.isTrue) {
+                        final product = controller.dummyDataForSkeleton();
+                        return ProductListItem(
+                          productInfo: product,
+                          index: index,
+                          onProductTap: () {},
+                          isSkeletonView: true,
+                        );
+                      }
+                      if (index == controller.products.length) {
+                        return Padding(
+                          padding: EdgeInsets.all(
+                            AppDimens.dimens16.w,
+                          ),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        );
+                      }
+                      final product = controller.products[index];
+                      return ProductListItem(
+                        productInfo: product,
+                        index: index,
+                        onProductTap: () => Get.toNamed(
+                          AppRoutes.productsDetailPage,
+                          arguments: product,
+                        ),
+                        isSkeletonView: false,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
