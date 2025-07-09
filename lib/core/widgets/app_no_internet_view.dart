@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../localizations/language_keys.dart';
 import '../utils/app_utils.dart';
+import 'app_widget.dart';
 
 class AppNoInternetView extends StatelessWidget {
   const AppNoInternetView({
@@ -20,9 +21,20 @@ class AppNoInternetView extends StatelessWidget {
             horizontal: AppDimens.dimensScreenHorizontalMargin.w,
           ),
           child: Center(
-            child: Text(
-              LanguageKey.noInternetConnection.tr,
-              textAlign: TextAlign.center,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppImageView(
+                  imagePath: AppAssets.icNoInternet,
+                  width: AppDimens.dimens80.w,
+                  height: AppDimens.dimens80.h,
+                ),
+                Text(
+                  LanguageKey.noInternetConnection.tr,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyle.textSize22Bold,
+                ),
+              ],
             ),
           ),
         ),

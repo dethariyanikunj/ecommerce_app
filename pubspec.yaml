@@ -61,6 +61,7 @@ dependencies:
   flutter_staggered_animations: ^1.0.0
 
 dev_dependencies:
+  mockito: ^5.4.4
   build_runner: ^2.3.3
   isar_generator: *isar_version
   flutter_test:

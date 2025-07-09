@@ -13,6 +13,7 @@ class English {
       LanguageKey.searchHint: 'Search...',
       LanguageKey.priceRange: 'Price Range',
       LanguageKey.ratingRange: 'Rating Range',
+      LanguageKey.noDataFound: 'No Data Found!',
     };
   }
 }
