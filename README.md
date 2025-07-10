@@ -101,12 +101,31 @@ product_carousel/              # 🔌 Custom carousel widget package (outside li
 git clone https://github.com/dethariyanikunj/ecommerce_app.git
 ```
 
-2. **Install dependencies**
+2. **Isar Namespace Setup
+
+If you face the following error:
+
+```
+> Namespace not specified. Specify a namespace in the module's build file.
+```
+
+✅ Quick Fix: Follow this official workaround shared by the Isar team:  
+🔗 [Isar Issue #1729 – Namespace Not Specified](https://github.com/isar/isar/issues/1729#issuecomment-3013073444)
+
+Make sure you have defined the namespace inside your `android/app/build.gradle` file:
+
+```groovy
+android {
+  namespace "com.example.your_app"
+}
+```
+
+3**Install dependencies**
 ```bash
 flutter pub get
 ```
 
-3. **Run the app**
+4. **Run the app**
 ```bash
 flutter run
 ```
@@ -165,21 +184,49 @@ MIT – use freely with attribution.
 
 ---
 
-### 🧩 Isar Namespace Setup
+## ✅ Test Coverage Report (macOS)
 
-If you face the following error:
+You can generate a local test coverage report to visualize how much of your codebase is covered by unit and widget tests.
 
-```
-> Namespace not specified. Specify a namespace in the module's build file.
-```
+---
 
-✅ Quick Fix: Follow this official workaround shared by the Isar team:  
-🔗 [Isar Issue #1729 – Namespace Not Specified](https://github.com/isar/isar/issues/1729#issuecomment-3013073444)
+### 🧪 Steps to Generate HTML Report
 
-Make sure you have defined the namespace inside your `android/app/build.gradle` file:
+1. **Run tests with coverage enabled**
 
-```groovy
-android {
-  namespace "com.example.your_app"
-}
-```
+   This command runs all tests and generates a `coverage/lcov.info` file:
+
+   ```bash
+   flutter test --coverage
+   ```
+
+2. **Install `lcov` (first time only)**
+
+   `lcov` is used to convert the coverage info to a readable HTML format:
+
+   ```bash
+   brew install lcov
+   ```
+
+3. **Generate the HTML report**
+
+   This command generates an HTML report inside the `coverage/html` folder:
+
+   ```bash
+   genhtml coverage/lcov.info -o coverage/html
+   ```
+
+4. **Open the report in your browser**
+
+   Run the command below to view your test coverage report:
+
+   ```bash
+   open coverage/html/index.html
+   ```
+
+   > This shows:
+   > - ✅ Which lines are covered by tests
+   > - ❌ Which lines are missed
+   > - 📊 File-by-file breakdown
+
+---
