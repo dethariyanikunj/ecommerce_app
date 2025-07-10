@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'models/product_carousel_model.dart';
 
-/// A single item in the [ProductCarousel], displaying image and title with Hero animation.
+/// A single product card used inside the [ProductCarousel].
+///
+/// Displays the product image with a title overlay, wrapped in a [Hero] widget
+/// for smooth transition animations when navigating to a product detail screen.
 class ProductCarouselItem extends StatelessWidget {
+  /// The product data to render in the carousel card.
   final ProductCarouselModel product;
 
+  /// Creates a visual representation of a product in the carousel.
+  ///
+  /// Requires a non-null [product].
   const ProductCarouselItem({
     super.key,
     required this.product,
@@ -14,7 +21,7 @@ class ProductCarouselItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: 'carousel-${product.id}',
+      tag: 'carousel-${product.id}', // Unique tag for animation transitions
       child: Material(
         elevation: 4,
         borderRadius: BorderRadius.circular(16),
@@ -23,6 +30,7 @@ class ProductCarouselItem extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
+              /// Load product image from network with fallback and loader
               Image.network(
                 product.imageUrl,
                 fit: BoxFit.cover,
@@ -33,6 +41,8 @@ class ProductCarouselItem extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 },
               ),
+
+              /// Bottom overlay with product title
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Container(
