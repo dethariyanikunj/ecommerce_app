@@ -59,6 +59,8 @@ dependencies:
   isar: *isar_version
   isar_flutter_libs: *isar_version
   flutter_staggered_animations: ^1.0.0
+  product_carousel:
+    path: ./product_carousel
 
 dev_dependencies:
   mockito: ^5.4.4
@@ -66,6 +68,7 @@ dev_dependencies:
   isar_generator: *isar_version
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

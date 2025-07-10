@@ -11,6 +11,7 @@ class ProductController extends GetxController {
   final GetProducts getProducts;
   ProductController(this.getProducts);
 
+  final carouselProducts = <ProductModel>[].obs;
   final products = <ProductModel>[].obs;
   final allProducts = <ProductModel>[];
   List<ProductModel> filteredProducts = [];
@@ -67,6 +68,14 @@ class ProductController extends GetxController {
     try {
       final result = await getProducts();
       allProducts.assignAll(result);
+
+      carouselProducts.clear();
+
+      if (allProducts.length > 5) {
+        carouselProducts.addAll(allProducts.take(5).toList());
+      } else {
+        carouselProducts.addAll(allProducts);
+      }
 
       globalMinPrice =
           allProducts.map((e) => e.price).reduce((a, b) => a < b ? a : b);
@@ -190,5 +199,12 @@ class ProductController extends GetxController {
       ..price = 340.57
       ..rating = 3.8
       ..ratingCount = 300;
+  }
+
+  void navigateToDetailScreen(ProductModel product) {
+    Get.toNamed(
+      AppRoutes.productsDetailPage,
+      arguments: product,
+    );
   }
 }

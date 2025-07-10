@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:product_carousel/product_carousel.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:test/features/product_catalog/presentation/adapters/product_carousel_adapter.dart';
 
 import '../../../../core/const/app_const.dart';
 import '../../../../core/localizations/language_keys.dart';
@@ -26,6 +28,10 @@ class ProductListPage extends GetView<ProductController> {
             title: LanguageKey.products.tr,
             isBackButtonVisible: false,
           ),
+          SizedBox(
+            height: AppDimens.dimens20.h,
+          ),
+          _carouselView(),
           SearchFilterView(
             controller: controller,
           ),
@@ -80,9 +86,8 @@ class ProductListPage extends GetView<ProductController> {
                         return ProductListItem(
                           productInfo: product,
                           index: index,
-                          onProductTap: () => Get.toNamed(
-                            AppRoutes.productsDetailPage,
-                            arguments: product,
+                          onProductTap: () => controller.navigateToDetailScreen(
+                            product,
                           ),
                           isSkeletonView: false,
                         );
@@ -95,6 +100,26 @@ class ProductListPage extends GetView<ProductController> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _carouselView() {
+    return Obx(
+      () {
+        final products = controller.carouselProducts.value;
+        final carouselProducts =
+            products.map((p) => p.toCarouselModel()).toList();
+
+        return ProductCarousel(
+          height: AppDimens.dimens200.h,
+          products: carouselProducts,
+          onItemTap: (carouselProduct) {
+            controller.navigateToDetailScreen(
+              carouselProduct.toIsarModel(),
+            );
+          },
+        );
+      },
     );
   }
 }

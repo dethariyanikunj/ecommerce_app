@@ -880,6 +880,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  product_carousel:
+    dependency: "direct main"
+    description:
+      path: product_carousel
+      relative: true
+    source: path
+    version: "0.0.1"
   pub_semver:
     dependency: transitive
     description:
