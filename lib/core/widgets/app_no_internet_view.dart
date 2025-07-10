@@ -29,10 +29,22 @@ class AppNoInternetView extends StatelessWidget {
                   width: AppDimens.dimens80.w,
                   height: AppDimens.dimens80.h,
                 ),
+                SizedBox(
+                  height: AppDimens.dimens10.h,
+                ),
                 Text(
                   LanguageKey.noInternetConnection.tr,
                   textAlign: TextAlign.center,
                   style: AppTextStyle.textSize22Bold,
+                ),
+                SizedBox(
+                  height: AppDimens.dimens10.h,
+                ),
+                AppOutlinedButton(
+                  onPressed: () {
+                    Get.offNamed(AppRoutes.productsCatalogPage);
+                  },
+                  text: LanguageKey.runOnOfflineMode.tr,
                 ),
               ],
             ),

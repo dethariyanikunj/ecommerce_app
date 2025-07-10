@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/utils/app_connectivity_manager.dart';
 import '../../../../core/utils/app_env_info.dart';
 import '../models/product_model.dart';
 
@@ -9,6 +11,9 @@ class ProductRemoteDataSource {
   ProductRemoteDataSource(this.dio);
 
   Future<List<ProductModel>> fetchProducts() async {
+    if (ConnectivityManager.instance.isNetConnected.isFalse) {
+      return [];
+    }
     final response = await dio.get(
       '${AppEnvInfo.apiBaseUrl}${ApiEndpoints.products}',
     );

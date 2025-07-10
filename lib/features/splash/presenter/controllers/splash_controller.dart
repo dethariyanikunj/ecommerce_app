@@ -28,6 +28,8 @@ class SplashController extends GetxController {
   }
 
   void _navigateToScreen() {
-    Get.offNamed(AppRoutes.productsCatalogPage);
+    if (ConnectivityManager.instance.isNetConnected.isTrue) {
+      Get.offNamed(AppRoutes.productsCatalogPage);
+    }
   }
 }

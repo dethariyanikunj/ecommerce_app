@@ -14,6 +14,8 @@ class English {
       LanguageKey.priceRange: 'Price Range',
       LanguageKey.ratingRange: 'Rating Range',
       LanguageKey.noDataFound: 'No Data Found!',
+      LanguageKey.runOnOfflineMode: 'Continue Offline Mode',
+      LanguageKey.offlineModeTag: 'Offline',
     };
   }
 }

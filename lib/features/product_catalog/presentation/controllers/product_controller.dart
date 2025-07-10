@@ -45,11 +45,32 @@ class ProductController extends GetxController {
 
   Timer? _debounce;
 
+  RxBool isOnline = false.obs;
+
   @override
   void onInit() {
     super.onInit();
+    isOnline.value = ConnectivityManager.instance.isNetConnected.isTrue;
     scrollController.addListener(_onScroll);
     loadProducts();
+    _observeConnectivity();
+  }
+
+  void _observeConnectivity() {
+    ever<bool>(
+      ConnectivityManager.instance.isNetConnected,
+      (connected) {
+        isOnline.value = connected;
+        if (connected &&
+            isLoading.isFalse &&
+            initialLoading.isFalse &&
+            allProducts.isEmpty) {
+          loadProducts();
+        } else {
+          debugPrint("No internet connection.");
+        }
+      },
+    );
   }
 
   void _onScroll() {
@@ -66,33 +87,38 @@ class ProductController extends GetxController {
     isLoading.value = true;
     initialLoading.value = true;
     try {
-      final result = await getProducts();
-      allProducts.assignAll(result);
+      final result = await getProducts(
+        fromCache: !ConnectivityManager.instance.isNetConnected.value,
+      );
 
-      carouselProducts.clear();
+      if (result.isNotEmpty) {
+        allProducts.assignAll(result);
 
-      if (allProducts.length > 5) {
-        carouselProducts.addAll(allProducts.take(5).toList());
-      } else {
-        carouselProducts.addAll(allProducts);
+        carouselProducts.clear();
+
+        if (allProducts.length > 5) {
+          carouselProducts.addAll(allProducts.take(5).toList());
+        } else {
+          carouselProducts.addAll(allProducts);
+        }
+
+        globalMinPrice =
+            allProducts.map((e) => e.price).reduce((a, b) => a < b ? a : b);
+        globalMaxPrice =
+            allProducts.map((e) => e.price).reduce((a, b) => a > b ? a : b);
+
+        minPrice.value = globalMinPrice;
+        maxPrice.value = globalMaxPrice;
+        minRating.value = globalMinRating;
+        maxRating.value = globalMaxRating;
+
+        tempMinPrice.value = globalMinPrice;
+        tempMaxPrice.value = globalMaxPrice;
+        tempMinRating.value = globalMinRating;
+        tempMaxRating.value = globalMaxRating;
+
+        _filter();
       }
-
-      globalMinPrice =
-          allProducts.map((e) => e.price).reduce((a, b) => a < b ? a : b);
-      globalMaxPrice =
-          allProducts.map((e) => e.price).reduce((a, b) => a > b ? a : b);
-
-      minPrice.value = globalMinPrice;
-      maxPrice.value = globalMaxPrice;
-      minRating.value = globalMinRating;
-      maxRating.value = globalMaxRating;
-
-      tempMinPrice.value = globalMinPrice;
-      tempMaxPrice.value = globalMaxPrice;
-      tempMinRating.value = globalMinRating;
-      tempMaxRating.value = globalMaxRating;
-
-      _filter();
     } finally {
       isLoading.value = false;
       initialLoading.value = false;
@@ -164,27 +190,28 @@ class ProductController extends GetxController {
     isLoading.value = true;
     try {
       final result = await getProducts();
+      if (result.isNotEmpty) {
+        final query = searchText.value.toLowerCase();
+        final filtered = result
+            .where(
+              (p) =>
+                  p.title.toLowerCase().contains(query) &&
+                  p.price >= minPrice.value &&
+                  p.price <= maxPrice.value &&
+                  p.rating >= minRating.value &&
+                  p.rating <= maxRating.value,
+            )
+            .toList();
 
-      final query = searchText.value.toLowerCase();
-      final filtered = result
-          .where(
-            (p) =>
-                p.title.toLowerCase().contains(query) &&
-                p.price >= minPrice.value &&
-                p.price <= maxPrice.value &&
-                p.rating >= minRating.value &&
-                p.rating <= maxRating.value,
-          )
-          .toList();
+        // Simulate infinite appending
+        final start = ((page - 1) * limit) % filtered.length;
+        final end = (start + limit).clamp(0, filtered.length);
 
-      // Simulate infinite appending
-      final start = ((page - 1) * limit) % filtered.length;
-      final end = (start + limit).clamp(0, filtered.length);
+        final chunk = filtered.sublist(start, end);
+        products.addAll(chunk);
 
-      final chunk = filtered.sublist(start, end);
-      products.addAll(chunk);
-
-      page++; // increment page always
+        page++; // increment page always
+      }
     } finally {
       isLoading.value = false;
     }
@@ -206,5 +233,12 @@ class ProductController extends GetxController {
       AppRoutes.productsDetailPage,
       arguments: product,
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    searchController.dispose();
+    super.dispose();
   }
 }

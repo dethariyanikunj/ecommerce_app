@@ -24,9 +24,25 @@ class ProductListPage extends GetView<ProductController> {
     return Scaffold(
       body: Column(
         children: [
-          AppScreenTitleBar(
-            title: LanguageKey.products.tr,
-            isBackButtonVisible: false,
+          Stack(
+            children: [
+              AppScreenTitleBar(
+                title: LanguageKey.products.tr,
+                isBackButtonVisible: false,
+              ),
+              Obx(
+                () {
+                  if (controller.isOnline.isTrue) {
+                    return const SizedBox.shrink();
+                  }
+                  return Positioned(
+                    right: AppDimens.dimensScreenHorizontalMargin.w,
+                    top: AppDimens.dimens15.h,
+                    child: _offlineModeTag(),
+                  );
+                },
+              ),
+            ],
           ),
           SizedBox(
             height: AppDimens.dimens20.h,
@@ -54,7 +70,9 @@ class ProductListPage extends GetView<ProductController> {
                   enabled: isSkeletonNeedToShow,
                   child: AnimationLimiter(
                     child: ListView.builder(
-                      padding: EdgeInsets.zero,
+                      padding: EdgeInsets.only(
+                        bottom: AppDimens.dimens20.h,
+                      ),
                       controller: controller.scrollController,
                       itemCount: isSkeletonNeedToShow
                           ? AppSkeletonConst.defaultVerticalItem
@@ -71,16 +89,19 @@ class ProductListPage extends GetView<ProductController> {
                           );
                         }
                         if (index == controller.products.length) {
-                          return Padding(
-                            padding: EdgeInsets.all(
-                              AppDimens.dimens16.w,
-                            ),
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primary,
+                          if (controller.isOnline.isTrue) {
+                            return Padding(
+                              padding: EdgeInsets.all(
+                                AppDimens.dimens16.w,
                               ),
-                            ),
-                          );
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            );
+                          }
+                          return const SizedBox.shrink();
                         }
                         final product = controller.products[index];
                         return ProductListItem(
@@ -99,6 +120,18 @@ class ProductListPage extends GetView<ProductController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _offlineModeTag() {
+    return SafeArea(
+      child: Text(
+        '🔴 ${LanguageKey.offlineModeTag.tr}',
+        textAlign: TextAlign.center,
+        style: AppTextStyle.textSize16Bold.copyWith(
+          color: AppColors.colorD32F2F,
+        ),
       ),
     );
   }

@@ -9,4 +9,6 @@ class LanguageKey {
   static const String apply = 'apply';
   static const String searchHint = 'search_hint';
   static const String noDataFound = 'no_data_found';
+  static const String runOnOfflineMode = 'run_on_offline_mode';
+  static const String offlineModeTag = 'offline_mode_tag';
 }
