@@ -512,6 +512,24 @@ class MockProductController extends _i1.Mock implements _i8.ProductController {
       );
 
   @override
+  _i4.RxBool get isOnline => (super.noSuchMethod(
+        Invocation.getter(#isOnline),
+        returnValue: _FakeRxBool_3(
+          this,
+          Invocation.getter(#isOnline),
+        ),
+      ) as _i4.RxBool);
+
+  @override
+  set isOnline(_i4.RxBool? _isOnline) => super.noSuchMethod(
+        Invocation.setter(
+          #isOnline,
+          _isOnline,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i4.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
         Invocation.getter(#onStart),
         returnValue: _FakeInternalFinalCallback_8<void>(
@@ -563,10 +581,11 @@ class MockProductController extends _i1.Mock implements _i8.ProductController {
       );
 
   @override
-  _i7.Future<void> loadProducts() => (super.noSuchMethod(
+  _i7.Future<void> loadProducts(bool? isToFetchLocalData) =>
+      (super.noSuchMethod(
         Invocation.method(
           #loadProducts,
-          [],
+          [isToFetchLocalData],
         ),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
@@ -628,6 +647,15 @@ class MockProductController extends _i1.Mock implements _i8.ProductController {
         Invocation.method(
           #navigateToDetailScreen,
           [product],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
         ),
         returnValueForMissingStub: null,
       );
@@ -732,15 +760,6 @@ class MockProductController extends _i1.Mock implements _i8.ProductController {
             id,
             listener,
           ],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
         ),
         returnValueForMissingStub: null,
       );

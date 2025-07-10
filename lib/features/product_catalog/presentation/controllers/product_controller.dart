@@ -47,12 +47,15 @@ class ProductController extends GetxController {
 
   RxBool isOnline = false.obs;
 
+  bool get _isToFetchLocalData =>
+      !ConnectivityManager.instance.isNetConnected.value;
+
   @override
   void onInit() {
     super.onInit();
     isOnline.value = ConnectivityManager.instance.isNetConnected.isTrue;
     scrollController.addListener(_onScroll);
-    loadProducts();
+    loadProducts(_isToFetchLocalData);
     _observeConnectivity();
   }
 
@@ -65,7 +68,7 @@ class ProductController extends GetxController {
             isLoading.isFalse &&
             initialLoading.isFalse &&
             allProducts.isEmpty) {
-          loadProducts();
+          loadProducts(_isToFetchLocalData);
         } else {
           debugPrint("No internet connection.");
         }
@@ -83,12 +86,12 @@ class ProductController extends GetxController {
     }
   }
 
-  Future<void> loadProducts() async {
+  Future<void> loadProducts(bool isToFetchLocalData) async {
     isLoading.value = true;
     initialLoading.value = true;
     try {
       final result = await getProducts(
-        fromCache: !ConnectivityManager.instance.isNetConnected.value,
+        fromCache: isToFetchLocalData,
       );
 
       if (result.isNotEmpty) {

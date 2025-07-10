@@ -31,7 +31,7 @@ void main() {
   });
 
   test('loadProducts loads initial list', () async {
-    await controller.loadProducts();
+    await controller.loadProducts(false);
 
     expect(controller.products.length, 20);
     expect(controller.isLoading.value, false);
@@ -40,7 +40,7 @@ void main() {
   });
 
   test('onSearchChanged filters products by title', () async {
-    await controller.loadProducts();
+    await controller.loadProducts(false);
 
     controller.onSearchChanged('Item 1');
     await Future.delayed(
@@ -54,7 +54,7 @@ void main() {
   });
 
   test('applyTempFilters filters by price and rating range', () async {
-    await controller.loadProducts();
+    await controller.loadProducts(false);
 
     controller.tempMinPrice.value = 5.0;
     controller.tempMaxPrice.value = 10.0;
@@ -71,7 +71,7 @@ void main() {
   });
 
   test('resetFilters restores full product list', () async {
-    await controller.loadProducts();
+    await controller.loadProducts(false);
 
     // apply filter
     controller.tempMinPrice.value = 10.0;
