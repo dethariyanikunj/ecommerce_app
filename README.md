@@ -58,16 +58,16 @@ A robust and scalable multi-module Flutter app built with **Clean Architecture**
 
 ## 📦 Tech Stack
 
-| Layer        | Library/Tool                            |
-|--------------|-----------------------------------------|
-| UI           | Flutter, ScreenUtil, GetX               |
-| State Mgmt   | GetX (Rx, Controller, DI)               |
-| API          | Dio                                     |
-| Offline DB   | Isar                                    |
-| Caching      | Isar, CachedNetworkImage                |
-| Animations   | Flutter Staggered Animations, Hero      |
-| Testing      | flutter_test, mockito, test             |
-| CI/Tools     | Code Coverage (planned), Custom package |
+| Layer        | Library/Tool                       |
+|--------------|------------------------------------|
+| UI           | Flutter, ScreenUtil, GetX          |
+| State Mgmt   | GetX (Rx, Controller, DI)          |
+| API          | Dio                                |
+| Offline DB   | Isar                               |
+| Caching      | Isar, CachedNetworkImage           |
+| Animations   | Flutter Staggered Animations, Hero |
+| Testing      | flutter_test, mockito, test        |
+| CI/Tools     | Code Coverage,  Custom package     |
 
 ---
 
@@ -107,10 +107,18 @@ If you face the following error:
 
 ```
 > Namespace not specified. Specify a namespace in the module's build file.
+
 ```
 
 ✅ Quick Fix: Follow this official workaround shared by the Isar team:  
 🔗 [Isar Issue #1729 – Namespace Not Specified](https://github.com/isar/isar/issues/1729#issuecomment-3013073444)
+
+Set compile sdk 35 other wise it will cause issue at time of building apk
+AAPT: error: resource android:attr/lStar not found.
+ 
+```bash
+compileSdkVersion 35
+```
 
 Make sure you have defined the namespace inside your `android/app/build.gradle` file:
 
@@ -163,8 +171,8 @@ dependencies:
 
 ## 📹 Demo / Preview
 
-- 🔗 **[Watch Feature Walkthrough](https://drive.google.com/file/d/your_demo_link_here/view)**
-- 📦 **[Download APK](https://example.com/apk/ecommerce-latest.apk)**
+- 🔗 **[Watch Feature Walkthrough](https://drive.google.com/file/d/1DVbY-WEHApOLAOLjLwyFL_NBAdUFcSx1/view?usp=sharing)**
+- 📦 **[Download APK](https://drive.google.com/file/d/1FzXj1V6DageMnGxiyMRi3SNPbd6yjHka/view?usp=sharing)**
 - 📊 **[Code Coverage Report](https://drive.google.com/file/d/1hILwW_uG4rv_BPKksTZYQlLNL0C_fVLp/view?usp=sharing)**
 
 ---
