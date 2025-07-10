@@ -165,7 +165,7 @@ dependencies:
 
 - 🔗 **[Watch Feature Walkthrough](https://drive.google.com/file/d/your_demo_link_here/view)**
 - 📦 **[Download APK](https://example.com/apk/ecommerce-latest.apk)**
-- 📊 **[Code Coverage Report](https://example.com/coverage/index.html)**
+- 📊 **[Code Coverage Report](https://drive.google.com/file/d/1hILwW_uG4rv_BPKksTZYQlLNL0C_fVLp/view?usp=sharing)**
 
 ---
 
