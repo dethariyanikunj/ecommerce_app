@@ -232,6 +232,7 @@ class ProductController extends GetxController {
   }
 
   void navigateToDetailScreen(ProductModel product) {
+    FocusManager.instance.primaryFocus?.unfocus();
     Get.toNamed(
       AppRoutes.productsDetailPage,
       arguments: product,

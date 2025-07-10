@@ -52,6 +52,7 @@ class SearchFilterView extends StatelessWidget {
   }
 
   void _openFilterSheet(BuildContext context, ProductController controller) {
+    FocusManager.instance.primaryFocus?.unfocus();
     controller.openFilterSheetDefaults();
     showModalBottomSheet(
       context: context,
