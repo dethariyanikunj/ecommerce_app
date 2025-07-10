@@ -184,6 +184,15 @@ class MockProductController extends _i1.Mock implements _i8.ProductController {
       ) as _i3.GetProducts);
 
   @override
+  _i4.RxList<_i6.ProductModel> get carouselProducts => (super.noSuchMethod(
+        Invocation.getter(#carouselProducts),
+        returnValue: _FakeRxList_2<_i6.ProductModel>(
+          this,
+          Invocation.getter(#carouselProducts),
+        ),
+      ) as _i4.RxList<_i6.ProductModel>);
+
+  @override
   _i4.RxList<_i6.ProductModel> get products => (super.noSuchMethod(
         Invocation.getter(#products),
         returnValue: _FakeRxList_2<_i6.ProductModel>(
@@ -613,6 +622,15 @@ class MockProductController extends _i1.Mock implements _i8.ProductController {
           ),
         ),
       ) as _i6.ProductModel);
+
+  @override
+  void navigateToDetailScreen(_i6.ProductModel? product) => super.noSuchMethod(
+        Invocation.method(
+          #navigateToDetailScreen,
+          [product],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void update([

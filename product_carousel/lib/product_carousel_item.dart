@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:product_carousel/widgets/app_network_image.dart';
 
 import 'models/product_carousel_model.dart';
 
@@ -30,16 +31,10 @@ class ProductCarouselItem extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              /// Load product image from network with fallback and loader
-              Image.network(
+              /// Lazy Loading product image from network with fallback and loader
+              AppNetworkImage(
                 product.imageUrl,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
-                    const Icon(Icons.broken_image, size: 40),
-                loadingBuilder: (_, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(child: CircularProgressIndicator());
-                },
               ),
 
               /// Bottom overlay with product title
