@@ -98,7 +98,7 @@ product_carousel/              # 🔌 Custom carousel widget package (outside li
 
 1. **Clone the repo**
 ```bash
-git clone https://github.com/dethariyanikunj/ecommerce_flutter_app.git
+git clone https://github.com/dethariyanikunj/ecommerce_app.git
 ```
 
 2. **Install dependencies**
@@ -109,17 +109,6 @@ flutter pub get
 3. **Run the app**
 ```bash
 flutter run
-```
-
-4. **Run tests**
-```bash
-flutter test --coverage
-```
-
-5. **Check coverage (optional)**
-```bash
-genhtml coverage/lcov.info -o coverage/html
-open coverage/html/index.html
 ```
 
 ---
@@ -140,7 +129,7 @@ open coverage/html/index.html
 ```yaml
 dependencies:
   product_carousel:
-    path: ./lib/product_carousel
+    path: ./product_carousel
 ```
 
 - Includes:
